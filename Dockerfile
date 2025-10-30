@@ -3,23 +3,22 @@ FROM python:3.12-slim as base
 WORKDIR /app
 
 # Install build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    wget \
-    && rm -rf /var/lib/apt/lists/*
-
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates build-essential wget && rm -rf /var/lib/apt/lists/*
 
 COPY pyproject.toml uv.lock app.py ./
+COPY requirements.txt ./
 
 # Install Python dependencies
-RUN pip install uv
-RUN uv sync
+# RUN pip install uv
+# RUN uv sync
+RUN pip install -r requirements.txt
 
 # Create the directory for rembg models
 RUN mkdir -p /root/.u2net/
 
 # Download the u2net.onnx model
 RUN wget -q https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net.onnx -O /root/.u2net/u2net.onnx
+# COPY ./u2net.onnx /root/.u2net/u2net.onnx
 
 
 FROM python:3.12-slim as builder

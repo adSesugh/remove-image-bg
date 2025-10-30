@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+rembg
+boto3
+onnxruntime
+requests
+pillow
+python-dotenv
