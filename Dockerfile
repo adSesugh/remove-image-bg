@@ -1,4 +1,4 @@
-FROM python:3.11-slim as builder
+FROM python:3.12-slim as base
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
+
 COPY pyproject.toml uv.lock ./
 
 # Install Python dependencies
@@ -22,12 +22,12 @@ RUN mkdir -p /root/.u2net/
 RUN wget -q https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net.onnx -O /root/.u2net/u2net.onnx
 
 
-FROM python:3.11-slim
+FROM python:3.12-slim as builder
 
 WORKDIR /app
 
 # Copy only necessary files from the builder stage
-COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
 COPY --from=builder /root/.u2net/ /root/.u2net/
 COPY app.py .
