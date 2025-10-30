@@ -9,9 +9,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
+COPY pyproject.toml uv.lock .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install uv && uv pip install --no-deps -r uv.lock
 
 # Create the directory for rembg models
 RUN mkdir -p /root/.u2net/
