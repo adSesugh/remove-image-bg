@@ -11,3 +11,5 @@ wheels/
 .env
 app_v2.py
 u2net.onnx
+.python-version
+Dockerfile
