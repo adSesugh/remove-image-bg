@@ -27,10 +27,10 @@ FROM python:3.12-slim as builder
 WORKDIR /app
 
 # Copy only necessary files from the builder stage
-COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
-COPY --from=builder /root/.u2net/ /root/.u2net/
-COPY app.py .
+COPY --from=base /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=base /usr/local/bin /usr/local/bin
+COPY --from=base /root/.u2net/ /root/.u2net/
+COPY --from=base app.py .
 
 EXPOSE 8090
 
