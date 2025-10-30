@@ -12,7 +12,7 @@ COPY requirements.txt .
 COPY pyproject.toml uv.lock ./
 
 # Install Python dependencies
-RUN pip install uv && uv pip install --no-deps -r uv.lock
+RUN pip install uv && uv install
 
 # Create the directory for rembg models
 RUN mkdir -p /root/.u2net/
