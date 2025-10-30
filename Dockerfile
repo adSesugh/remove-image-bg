@@ -30,7 +30,7 @@ WORKDIR /app
 COPY --from=base /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=base /usr/local/bin /usr/local/bin
 COPY --from=base /root/.u2net/ /root/.u2net/
-COPY --from=base app.py .
+COPY --from=base /app/app.py .
 
 EXPOSE 8090
 
