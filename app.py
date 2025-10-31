@@ -75,3 +75,7 @@ async def remove_bg(image_url: str = Query(...), output_key: str | None = None):
     except Exception as e:
         logger.error(f"An unexpected error occurred during background removal: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Internal server error: {e}")
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))  # default 8000 for local dev
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
